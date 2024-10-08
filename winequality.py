@@ -16,6 +16,13 @@ import mlflow
 import mlflow.sklearn
 
 import logging
+import dagshub
+dagshub.init(repo_owner='pparashar21', repo_name='MLflow_test', mlflow=True)
+
+# import mlflow
+# with mlflow.start_run():
+#   mlflow.log_param('parameter name', 'value')
+#   mlflow.log_metric('metric name', 1)
 
 logging.basicConfig(level=logging.WARN)
 logger = logging.getLogger(__name__)
@@ -73,6 +80,16 @@ if __name__ == "__main__":
         mlflow.log_metric("rmse", rmse)
         mlflow.log_metric("r2", r2)
         mlflow.log_metric("mae", mae)
+        
+        # input_example = test_x[:5]
+    
+        # # Log the model with input example and signature
+        # mlflow.sklearn.log_model(
+        #     lr,
+        #     "ElasticNetModel",
+        #     input_example=input_example,  # This is the key part
+        #     signature=mlflow.models.infer_signature(train_x, lr.predict(train_x))
+        # )
 
         remote_server_url = "https://dagshub.com/pparashar21/MLflow_test.mlflow"
         mlflow.set_tracking_uri(remote_server_url)
